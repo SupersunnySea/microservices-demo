@@ -9,7 +9,7 @@ podTemplate(label: label, containers: [
   containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
 ],
 volumes: [
-  hostPathVolume(mountPath: '/etc/resolv.conf', hostPath: '/etc/resolv.conf'),
+//  hostPathVolume(mountPath: '/etc/resolv.conf', hostPath: '/etc/resolv.conf'),
   hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 ]) {
