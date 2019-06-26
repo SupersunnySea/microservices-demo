@@ -42,7 +42,9 @@ volumes: [
     }
     stage('Create Docker images') {
       container('docker') {
-        withCredentials([usernamePassword(credentialsId: 'index.docker.io', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
+        echo "$REGISTRY_AUTH_USR"
+        echo "$REGISTRY_AUTH_PSW"
+        withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
             pwd
             docker login -u wuhua988 -p wang123456 index.docker.io
