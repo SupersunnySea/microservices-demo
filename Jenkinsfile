@@ -28,6 +28,7 @@ volumes: [
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
             cat /etc/hosts
+            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
             """
       }
     }
@@ -37,10 +38,11 @@ volumes: [
          sh """
            hostname
            hostname -i
+           services.gradle.org
            echo "104.18.191.9 downloads.gradle.org" >> /etc/hosts
            echo "104.18.191.9 services.gradle.org" >> /etc/hosts
            cat /etc/hosts
-           docker ps
+           wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
          """
       }
     }
