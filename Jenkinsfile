@@ -42,7 +42,6 @@ volumes: [
            echo "104.18.191.9 services.gradle.org" >> /etc/hosts
            cat /etc/hosts
            rm -f gradle-4.4-bin.zip
-           wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
          """
       }
     }
