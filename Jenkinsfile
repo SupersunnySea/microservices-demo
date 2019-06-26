@@ -38,7 +38,7 @@ volumes: [
            hostname
            hostname -i
            cat /etc/hosts
-           find  / -name "gradle"
+           find  / -name "*gradle*"
          """
       }
     }
