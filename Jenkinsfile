@@ -24,6 +24,7 @@ volumes: [
       container('gradle') {
           sh """
             pwd
+            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
@@ -36,6 +37,7 @@ volumes: [
         // example to show you can run docker commands when you mount the socket
          sh """
            hostname
+           wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
            hostname -i
            cat /etc/resolv.conf
            docker ps
