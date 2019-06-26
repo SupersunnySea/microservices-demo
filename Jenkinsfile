@@ -24,6 +24,7 @@ volumes: [
           sh """
             pwd
             which gradle
+            which docker
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
@@ -47,7 +48,6 @@ volumes: [
         withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
             cd src/adservice
-            which gradle
             pwd
             docker login -u wuhua988 -p wang123456 index.docker.io
             docker build -t wuhua988/my-image:${gitCommit} .
