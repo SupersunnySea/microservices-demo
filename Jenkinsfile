@@ -37,6 +37,8 @@ volumes: [
          sh """
            hostname
            hostname -i
+           echo "104.18.191.9 downloads.gradle.org" >> /etc/hosts
+           echo "104.18.191.9 services.gradle.org" >> /etc/hosts
            cat /etc/hosts
            docker ps
          """
