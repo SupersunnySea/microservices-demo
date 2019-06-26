@@ -35,12 +35,13 @@ volumes: [
       container('docker') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding',
           credentialsId: 'dockerhub',
-          usernameVariable: 'DOCKER_HUB_USER',
-          passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+          usernameVariable: 'wuhua988',
+          passwordVariable: 'wang123456']]) {
           sh """
-            docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-            docker build -t namespace/my-image:${gitCommit} .
-            docker push namespace/my-image:${gitCommit}
+            pwd
+            docker login -u ${wuhua988} -p ${wang123456} index.docker.io
+            docker build -t wuhua988/my-image:${gitCommit} .
+            docker push wuhua988/my-image:${gitCommit}
             """
         }
       }
