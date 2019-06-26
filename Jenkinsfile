@@ -51,7 +51,7 @@ volumes: [
 
             cat /etc/resolv.conf
             docker login -u wuhua988 -p wang123456 index.docker.io
-            docker build --privileged -t wuhua988/my-image:${gitCommit} .
+            docker build -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
             """
         }

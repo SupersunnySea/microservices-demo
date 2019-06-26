@@ -2,6 +2,7 @@ FROM openjdk:8-slim as builder
 
 WORKDIR /app
 
+RUN cat /etc/resolv.conf
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
