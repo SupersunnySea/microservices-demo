@@ -39,7 +39,7 @@ volumes: [
            hostname
            hostname -i
            cat /etc/hosts
-           find  / -name "*gradle*"
+           find / -name gax-bom-1.34.0.pom
          """
       }
     }
