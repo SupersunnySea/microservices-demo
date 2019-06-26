@@ -19,18 +19,18 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
  
-    stage('Build-Iiiiii') {
-      container('gradle') {
-          sh """
-            pwd
-            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-            cd src/adservice
-            pwd
-            ./gradlew downloadRepos
-            """
-      }
-    }
+    // stage('Build-Iiiiii') {
+    //   container('gradle') {
+    //       sh """
+    //         pwd
+    //         echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+    //         echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+    //         cd src/adservice
+    //         pwd
+    //         ./gradlew downloadRepos
+    //         """
+    //   }
+    // }
     stage('Runing containers') {
       container('docker') {
         // example to show you can run docker commands when you mount the socket
@@ -43,7 +43,7 @@ volumes: [
     }
     stage('Create Docker images') {
       container('docker') {
-        withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07')]) {
+        withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
             cd src/adservice
             pwd
