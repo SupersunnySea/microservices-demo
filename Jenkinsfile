@@ -19,18 +19,18 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
  
-    stage('Build-Iiiiii') {
-      container('gradle') {
-          sh """
-            pwd
-            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-            cd src/adservice
-            pwd
-            ./gradlew installDist
-            """
-      }
-    }
+    // stage('Build-Iiiiii') {
+    //   container('gradle') {
+    //       sh """
+    //         pwd
+    //         echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+    //         echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+    //         cd src/adservice
+    //         pwd
+    //         ./gradlew installDist
+    //         """
+    //   }
+    // }
     stage('Create Docker images') {
       container('docker') {
         withCredentials([usernamePassword(credentialsId: 'index.docker.io', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
