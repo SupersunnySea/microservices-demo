@@ -46,6 +46,7 @@ volumes: [
         withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
             pwd
+            cd src/adservice
             docker login -u wuhua988 -p wang123456 index.docker.io
             docker build -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
