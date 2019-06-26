@@ -2,7 +2,8 @@ FROM openjdk:8-slim as builder
 
 WORKDIR /app
 
-RUN cat /etc/resolv.conf
+RUN wget -q -O- https://storage.googleapis.com/cloud-profiler/java/latest/profiler_java_agent.tar.gz 
+
 COPY ["build.gradle", "gradlew", "./"]
 COPY gradle gradle
 RUN chmod +x gradlew
