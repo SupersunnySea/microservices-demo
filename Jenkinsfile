@@ -43,7 +43,7 @@ volumes: [
     }
     stage('Create Docker images') {
       container('docker') {
-        withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
+        withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07')]) {
           sh """
             cd src/adservice
             pwd
