@@ -98,6 +98,8 @@ spec:
 
   // def image = "jenkins/jnlp-slave"
   node(label) {
+    def myRepo = checkout scm
+    def gitCommit = myRepo.GIT_COMMIT
     stage('Build Docker image') {
       // git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
       container('docker') {
