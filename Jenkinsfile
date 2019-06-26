@@ -27,7 +27,6 @@ volumes: [
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
-            ./gradlew downloadRepos
             find /  -name "gax-bom-1.34.0.pom"
             """
       }
@@ -50,9 +49,9 @@ volumes: [
             cd src/adservice
             pwd
 
-            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
+            cat /etc/resolv.conf
             docker login -u wuhua988 -p wang123456 index.docker.io
-            docker build -t wuhua988/my-image:${gitCommit} .
+            docker build --privileged -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
             """
         }
