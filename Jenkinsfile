@@ -47,6 +47,7 @@ volumes: [
           sh """
             cd src/adservice
             pwd
+            which yum
             docker login -u wuhua988 -p wang123456 index.docker.io
             docker build -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
