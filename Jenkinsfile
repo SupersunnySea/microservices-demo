@@ -27,6 +27,7 @@ volumes: [
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
+            ping services.gradle.org
             cat /etc/resolv.conf
             """
       }
@@ -37,6 +38,7 @@ volumes: [
          sh """
            hostname
            hostname -i
+           ping services.gradle.org
            cat /etc/resolv.conf
            docker ps
          """
