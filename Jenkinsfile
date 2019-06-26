@@ -28,7 +28,6 @@ volumes: [
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
             cat /etc/hosts
-            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
             """
       }
     }
@@ -49,9 +48,11 @@ volumes: [
       container('docker') {
         withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
-            rm -f gradle-4.4-bin.zip
+
             cd src/adservice
             pwd
+            rm -f gradle-4.4-bin.zip
+            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
             docker login -u wuhua988 -p wang123456 index.docker.io
             docker build -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
