@@ -31,17 +31,17 @@ volumes: [
             """
       }
     }
-    stage('Runing containers') {
-      container('docker') {
-        // example to show you can run docker commands when you mount the socket
-         sh """
-           hostname
-           hostname -i
-           cat /etc/hosts
-           find / -name gax-bom-1.34.0.pom
-         """
-      }
-    }
+    // stage('Runing containers') {
+    //   container('docker') {
+    //     // example to show you can run docker commands when you mount the socket
+    //      sh """
+    //        hostname
+    //        hostname -i
+    //        cat /etc/hosts
+    //        find / -name gax-bom-1.34.0.pom
+    //      """
+    //   }
+    // }
     stage('Create Docker images') {
       container('docker') {
         withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
