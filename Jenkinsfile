@@ -49,7 +49,8 @@ volumes: [
           sh """
             cd src/adservice
             pwd
-            rm -f gradle-4.4-bin.zip
+
+            wget -c https://services.gradle.org/distributions/gradle-4.4-bin.zip
             docker login -u wuhua988 -p wang123456 index.docker.io
             docker build -t wuhua988/my-image:${gitCommit} .
             docker push wuhua988/my-image:${gitCommit}
