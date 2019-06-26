@@ -27,7 +27,8 @@ volumes: [
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
-            cat /etc/hosts
+            ./gradlew downloadRepos
+            find /  -name "gax-bom-1.34.0.pom"
             """
       }
     }
