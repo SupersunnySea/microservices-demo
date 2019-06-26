@@ -9,9 +9,9 @@ podTemplate(label: label, containers: [
   containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
 ],
 volumes: [
+//  hostPathVolume(mountPath: '/etc/resolv.conf', hostPath: '/etc/resolv.conf'),
   hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
-  hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-  hostPathVolume(mountPath: '/etc/resolv.conf', hostPath: '/etc/resolv.conf')
+  hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 ]) {
   node(label) {
     def myRepo = checkout scm
@@ -20,24 +20,24 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
  
-    // stage('Build-Iiiiii') {
-    //   container('gradle') {
-    //       sh """
-    //         pwd
-    //         echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-    //         echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-    //         cd src/adservice
-    //         pwd
-    //         ./gradlew downloadRepos
-    //         """
-    //   }
-    // }
+    stage('Build-Iiiiii') {
+      container('gradle') {
+          sh """
+            pwd
+            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+            cd src/adservice
+            cat /etc/resolv.conf
+            """
+      }
+    }
     stage('Runing containers') {
       container('docker') {
         // example to show you can run docker commands when you mount the socket
          sh """
            hostname
            hostname -i
+           cat /etc/resolv.conf
            docker ps
          """
       }
