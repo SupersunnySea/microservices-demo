@@ -31,6 +31,15 @@ volumes: [
     //         """
     //   }
     // }
+    stage(‘Check running containers’) {
+      container(‘docker’) {
+        // example to show you can run docker commands when you mount the socket
+        sh ‘hostname‘
+        sh ‘hostname -i’
+        sh ‘docker ps‘
+      }
+
+    }
     stage('Create Docker images') {
       container('docker') {
         withCredentials([usernamePassword(credentialsId: 'index.docker.io', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
