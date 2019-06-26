@@ -37,7 +37,6 @@ volumes: [
          sh """
            hostname
            hostname -i
-           ping services.gradle.org
            cat /etc/resolv.conf
            docker ps
          """
