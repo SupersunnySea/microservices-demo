@@ -23,8 +23,6 @@ volumes: [
       container('gradle') {
           sh """
             pwd
-            which gradle
-            which docker
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
