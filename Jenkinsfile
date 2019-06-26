@@ -33,10 +33,7 @@ volumes: [
     }
     stage('Create Docker images') {
       container('docker') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding',
-          credentialsId: 'dockerhub',
-          usernameVariable: 'wuhua988',
-          passwordVariable: 'wang123456']]) {
+        withCredentials([usernamePassword(credentialsId: 'index.docker.io', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
           sh """
             pwd
             docker login -u wuhua988 -p wang123456 index.docker.io
