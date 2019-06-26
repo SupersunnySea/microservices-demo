@@ -31,14 +31,13 @@ volumes: [
     //         """
     //   }
     // }
-    stage(‘Check running containers’) {
+    stage('Runing containers') {
       container(‘docker’) {
         // example to show you can run docker commands when you mount the socket
         sh ‘hostname‘
         sh ‘hostname -i’
         sh ‘docker ps‘
       }
-
     }
     stage('Create Docker images') {
       container('docker') {
