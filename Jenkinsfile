@@ -32,11 +32,13 @@ volumes: [
       }
     }
     stage('Runing containers') {
-      container(‘docker’) {
+      container('docker') {
         // example to show you can run docker commands when you mount the socket
-        sh ‘hostname‘
-        sh ‘hostname -i’
-        sh ‘docker ps‘
+         sh """
+           hostname
+           hostname -i
+           docker ps
+         """
       }
     }
     stage('Create Docker images') {
