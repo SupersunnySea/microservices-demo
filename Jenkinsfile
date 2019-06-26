@@ -83,7 +83,9 @@ kind: Pod
 spec:
   containers:
   - name: docker
-    image: docker:1.11
+    image: docker:18.05-dind
+    securityContext:
+      privileged: true
     command: ['cat']
     tty: true
     volumeMounts:
