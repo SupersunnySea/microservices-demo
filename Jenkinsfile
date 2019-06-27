@@ -58,7 +58,7 @@ volumes: [
             sh """    
             cd src/adservice
             docker build --network=host -t 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/my-image:${gitCommit} .
-            docker push 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/my-image:${gitCommit}
+            docker push 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/adservice:${gitCommit}
             //def customImage = docker.build("475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/ecrtest:110")
             //customImage.push()
             """
