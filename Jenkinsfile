@@ -29,7 +29,7 @@ volumes: [
       }
     }
 
-    stage('Create Docker images') {
+    stage('Create Docker Images') {
       container('docker') {
         //configure
         docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
