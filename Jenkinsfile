@@ -54,12 +54,9 @@ volumes: [
         // }
          
         //configure registry
-        docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
-           
-            //build image
+        docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {    
+            cd src/adservice
             def customImage = docker.build("ecrtest:${env.BUILD_ID}")
-             
-            //push image
             customImage.push()
         }
       }
