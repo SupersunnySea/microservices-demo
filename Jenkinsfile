@@ -56,8 +56,10 @@ volumes: [
         //configure registry
         docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {    
             cd src/adservice
-            def customImage = docker.build("ecrtest:110")
-            customImage.push()
+            docker build --network=host -t 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/my-image:${gitCommit} .
+            docker push 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/my-image:${gitCommit}
+            //def customImage = docker.build("475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/ecrtest:110")
+            //customImage.push()
         }
       }
     }
