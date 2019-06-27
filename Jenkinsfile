@@ -9,7 +9,6 @@ podTemplate(label: label, containers: [
   containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
 ],
 volumes: [
-//  hostPathVolume(mountPath: '/etc/resolv.conf', hostPath: '/etc/resolv.conf'),
   hostPathVolume(mountPath: '/home/gradle/.gradle', hostPath: '/tmp/jenkins/.gradle'),
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
 ]) {
@@ -20,7 +19,7 @@ volumes: [
     def shortGitCommit = "${gitCommit[0..10]}"
     def previousGitCommit = sh(script: "git rev-parse ${gitCommit}~", returnStdout: true)
  
-    stage('Build-Iiiiii') {
+    stage('Build') {
       container('gradle') {
           sh """
             pwd
@@ -43,15 +42,6 @@ volumes: [
     // }
     stage('Create Docker images') {
       container('docker') {
-        // withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
-          // sh """
-          //   cd src/adservice
-          //   docker login -u wuhua988 -p wang123456 index.docker.io
-          //   docker build --network=host -t wuhua988/my-image:${gitCommit} .
-          //   docker push wuhua988/my-image:${gitCommit}
-          //   """
-        // }
-         
         //configure registry
         docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
             sh """    
@@ -60,21 +50,19 @@ volumes: [
             docker images
 
             docker push 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/adservice:${gitCommit}
-            //def customImage = docker.build("475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/ecrtest:110")
-            //customImage.push()
             """
         }
       }
     }
-    stage('Run kubectl') {
-      container('kubectl') {
-        sh "kubectl get pods"
-      }
-    }
-    stage('Run helm') {
-      container('helm') {
-        sh "helm list"
-      }
-    }
+    // stage('Run kubectl') {
+    //   container('kubectl') {
+    //     sh "kubectl get pods"
+    //   }
+    // }
+    // stage('Run helm') {
+    //   container('helm') {
+    //     sh "helm list"
+    //   }
+    // }
   }
 }
