@@ -31,7 +31,7 @@ volumes: [
 
     stage('Create Docker images') {
       container('docker') {
-        //configure registry
+        //configure
         docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
             sh """    
             cd src/adservice
