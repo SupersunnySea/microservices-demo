@@ -300,8 +300,10 @@ public final class AdService {
     int i=0;
     while(i<1000){
       exampleHttpRequestsTotal.inc();
+      Thread.sleep(5000);
       i++;
     }
+
     org.eclipse.jetty.server.Server server = new org.eclipse.jetty.server.Server(8001);
     ServletContextHandler context = new ServletContextHandler();
     context.setContextPath("/");
