@@ -66,8 +66,8 @@ public final class AdService {
   static class ExampleServlet extends HttpServlet {
     static final Counter exampleHttpRequestsTotal = Counter.build()
             .name("example_http_requests_total").help("example http requests total.").register();
-    static final Counter exampleHttpRequestsTotal1 = Counter.build()
-            .name("example_http_requests_total").help("example http requests total.").register();
+    //static final Counter exampleHttpRequestsTotal1 = Counter.build()
+            //.name("example_http_requests_total").help("example http requests total.").register();
 
     static final Gauge exampleHttpRequests = Gauge.build()
             .name("example_http_requests").help("example http requests.").register();
@@ -93,7 +93,7 @@ public final class AdService {
   private static final AdService service = new AdService();
 
   private void start() throws IOException {
-    ExampleServlet.exampleHttpRequestsTotal1=
+    //ExampleServlet.exampleHttpRequestsTotal1=
     //exampleHttpRequestsTotal.inc();
     int port = Integer.parseInt(System.getenv("PORT"));
     healthMgr = new HealthStatusManager();
