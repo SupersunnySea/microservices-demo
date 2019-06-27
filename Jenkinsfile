@@ -45,13 +45,26 @@ volumes: [
     stage('Create Docker images') {
       container('docker') {
         // withCredentials([usernamePassword(credentialsId: 'd94f2975-2889-4d5a-ba7c-a8ea596c5c07', passwordVariable: 'wang123456', usernameVariable: 'wuhua988')]) {
-          sh """
-            cd src/adservice
-            docker login -u wuhua988 -p wang123456 index.docker.io
-            docker build --network=host -t wuhua988/my-image:${gitCommit} .
-            docker push wuhua988/my-image:${gitCommit}
-            """
+          // sh """
+          //   cd src/adservice
+          //   docker login -u wuhua988 -p wang123456 index.docker.io
+          //   docker build --network=host -t wuhua988/my-image:${gitCommit} .
+          //   docker push wuhua988/my-image:${gitCommit}
+          //   """
         // }
+
+        sh 'rm  ~/.dockercfg || true'
+        sh 'rm ~/.docker/config.json || true'
+         
+        //configure registry
+        docker.withRegistry('475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
+           
+            //build image
+            def customImage = docker.build("ecrtest:${env.BUILD_ID}")
+             
+            //push image
+            customImage.push()
+        }
       }
     }
     stage('Run kubectl') {
