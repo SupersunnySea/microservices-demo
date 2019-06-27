@@ -54,7 +54,7 @@ volumes: [
         // }
          
         //configure registry
-        docker.withRegistry('475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
+        docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
            
             //build image
             def customImage = docker.build("ecrtest:${env.BUILD_ID}")
