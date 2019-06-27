@@ -27,7 +27,6 @@ volumes: [
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
-            find /  -name "gax-bom-1.34.0.pom"
             """
       }
     }
@@ -57,7 +56,7 @@ volumes: [
         docker.withRegistry('https://475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
             sh """    
             cd src/adservice
-            docker build --network=host -t 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/my-image:${gitCommit} .
+            docker build --network=host -t 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/adservice:${gitCommit} .
             docker images
 
             docker push 475762907367.dkr.ecr.ap-southeast-1.amazonaws.com/adservice:${gitCommit}
