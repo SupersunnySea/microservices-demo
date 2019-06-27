@@ -52,9 +52,6 @@ volumes: [
           //   docker push wuhua988/my-image:${gitCommit}
           //   """
         // }
-
-        sh 'rm  ~/.dockercfg || true'
-        sh 'rm ~/.docker/config.json || true'
          
         //configure registry
         docker.withRegistry('475762907367.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:my_ecr_id') {
