@@ -49,7 +49,39 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import io.prometheus.client.*;
+import io.prometheus.client.exporter.MetricsServlet;
+import io.prometheus.client.hotspot.DefaultExports;
+//import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
 public final class AdService {
+  static class ExampleServlet extends HttpServlet {
+    static final Counter exampleHttpRequestsTotal = Counter.build()
+            .name("example_http_requests_total").help("example http requests total.").register();
+    static final Counter exampleHttpRequestsTotal1 = Counter.build()
+            .name("example_http_requests_total").help("example http requests total.").register();
+
+    static final Gauge exampleHttpRequests = Gauge.build()
+            .name("example_http_requests").help("example http requests.").register();
+    static final Histogram requestLatency = Histogram.build()
+            .name("requests_latency_seconds").help("Request latency in seconds.").register();
+    @Override
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
+      //resp.getWriter().println("Hello World!");
+      // Increment the number of requests.
+      //inprogressRequests.inc();
+    }
+
+  }
 
   private static final Logger logger = LogManager.getLogger(AdService.class);
   private static final Tracer tracer = Tracing.getTracer();
@@ -61,6 +93,8 @@ public final class AdService {
   private static final AdService service = new AdService();
 
   private void start() throws IOException {
+    ExampleServlet.exampleHttpRequestsTotal1=
+    //exampleHttpRequestsTotal.inc();
     int port = Integer.parseInt(System.getenv("PORT"));
     healthMgr = new HealthStatusManager();
 
@@ -103,6 +137,9 @@ public final class AdService {
      */
     @Override
     public void getAds(AdRequest req, StreamObserver<AdResponse> responseObserver) {
+      ExampleServlet.exampleHttpRequestsTotal.inc();
+      ExampleServlet.exampleHttpRequests.inc();
+      Histogram.Timer requestTimer = ExampleServlet.requestLatency.startTimer();
       AdService service = AdService.getInstance();
       Span span = tracer.getCurrentSpan();
       try {
@@ -137,23 +174,36 @@ public final class AdService {
         logger.log(Level.WARN, "GetAds Failed", e.getStatus());
         responseObserver.onError(e);
       }
+      //inprogressRequests.dec();
+      try {
+        Thread.sleep((int)(Math.random()*5000));
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      ExampleServlet.exampleHttpRequests.dec();
+      requestTimer.observeDuration();
     }
+
   }
 
   private static final ImmutableListMultimap<String, Ad> adsMap = createAdsMap();
 
   private Collection<Ad> getAdsByCategory(String category) {
+    //inprogressRequests.inc();
+    //inprogressRequests.dec();
     return adsMap.get(category);
   }
 
   private static final Random random = new Random();
 
   private List<Ad> getRandomAds() {
+    //inprogressRequests.inc();
     List<Ad> ads = new ArrayList<>(MAX_ADS_TO_SERVE);
     Collection<Ad> allAds = adsMap.values();
     for (int i = 0; i < MAX_ADS_TO_SERVE; i++) {
       ads.add(Iterables.get(allAds, random.nextInt(allAds.size())));
     }
+    //inprogressRequests.dec();
     return ads;
   }
 
@@ -267,8 +317,59 @@ public final class AdService {
     }
   }
 
+
+//  public static void startTestServer(int port)
+//  {
+//    try
+//    {
+//      Server server = new Server(port);
+//      ServletContextHandler context = new ServletContextHandler();
+//      context.setContextPath("/");
+//      server.setHandler(context);
+//
+//      //Expose our Instrumented servlet.
+//      context.addServlet(new ServletHolder(Instrumented_Class.getInstance()), "/");
+//
+//      //Prometheus Metrics Servlet
+//      context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
+//
+//      // Add metrics about CPU, JVM memory etc.
+//      DefaultExports.initialize();
+//
+//      // Start the webserver.
+//      server.start();
+//      server.join();
+//    }
+//    catch (Exception ex)
+//    {
+//      ex.printStackTrace();
+//    }
+//  }
+
+
+
+
   /** Main launches the server from the command line. */
   public static void main(String[] args) throws IOException, InterruptedException {
+    org.eclipse.jetty.server.Server server = new org.eclipse.jetty.server.Server(8001);
+    ServletContextHandler context = new ServletContextHandler();
+    context.setContextPath("/");
+    server.setHandler(context);
+    // Expose our example servlet.
+    context.addServlet(new ServletHolder(new ExampleServlet()), "/");
+    // Expose Promtheus metrics.
+    context.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
+    // Add metrics about CPU, JVM memory etc.
+    DefaultExports.initialize();
+
+
+    // Start the webserver.
+    try {
+      server.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    //server.join();
     // Registers all RPC views.
     /**
      * [TODO:rghetia] replace registerAllViews with registerAllGrpcViews.
