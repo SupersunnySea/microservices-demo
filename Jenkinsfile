@@ -54,6 +54,8 @@ volumes: [
             """
             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'src/adservice/build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'ADService HTML Report', reportTitles: 'tittle'])
 
+            sh "./gradlew jacocoTestCoverageVerification"
+
       }
     }
 
