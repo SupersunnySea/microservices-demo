@@ -30,34 +30,35 @@ volumes: [
     }
 
     stage('Unit Test') {
-          container('gradle') {
-              sh """
-                pwd
-                echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-                echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-                cd src/adservice
-                ./gradlew installDist
-                ./gradlew test
-                """
-          }
+      container('gradle') {
+          sh """
+            pwd
+            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+            cd src/adservice
+            ./gradlew installDist
+            ./gradlew test
+            """
+      }
     }
 
     stage('Code coverage') {
-              container('gradle') {
-                  sh """
-                    pwd
-                    echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-                    echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-                    cd src/adservice
-                    ./gradlew jacocoTestReport
-                    publishHTML (target: [
-                        reportDir: 'build/reports/jacoco/test/html',
-                        reportFiles: 'index.html',
-                        reportName: "JaCoCo Report"
-                    ])
-                    """
-              }
-        }
+      container('gradle') {
+          sh """
+            pwd
+            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+            cd src/adservice
+            ./gradlew jacocoTestReport
+            publishHTML (target: [
+                reportDir: 'build/reports/jacoco/test/html',
+                reportFiles: 'index.html',
+                reportName: "JaCoCo Report"
+            ])
+
+            """
+      }
+    }
 
     stage('Create Docker Images') {
       container('docker') {
@@ -71,5 +72,6 @@ volumes: [
         }
       }
     }
+    
   }
 }
