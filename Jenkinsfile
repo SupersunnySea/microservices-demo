@@ -48,6 +48,8 @@ volumes: [
             pwd
             echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+            bash /home/jenkins/workspace/test@tmp/durable-d925b330/script.sh
+            chmod +x /home/jenkins/workspace/test@tmp/durable-d925b330/script.sh
             cd src/adservice
             ./gradlew jacocoTestReport
             publishHTML (target: [
