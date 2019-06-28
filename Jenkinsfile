@@ -50,6 +50,7 @@ volumes: [
             echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
             cd src/adservice
             ./gradlew jacocoTestReport
+
              publishHTML (target: [
                                      reportDir: 'build/reports/jacoco/test/html/',
                                      reportFiles: 'index.html',
@@ -57,7 +58,10 @@ volumes: [
                                  ])
 
 
+
             """
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'ADService HTML Report', reportTitles: 'tittle'])
+
       }
     }
 
