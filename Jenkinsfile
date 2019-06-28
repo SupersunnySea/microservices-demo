@@ -75,7 +75,6 @@ volumes: [
             """
       }
     }
->>>>>>> 409e1e43daf5e3b49ec14ea4a601a764a23b5351
 
     stage('Create Docker Images') {
       container('docker') {
