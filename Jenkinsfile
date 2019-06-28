@@ -51,14 +51,15 @@ volumes: [
             cd src/adservice
             ./gradlew jacocoTestReport
 
-            publishHTML (target: [
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: 'src/adservice/build/reports/jacoco/test/html/',
-              reportFiles: 'index.html',
-              reportName: "JaCoCo Report"
-            ])
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'build/reports/jacoco/test/html', reportFiles: 'index.html', reportName: 'ADService HTML Report', reportTitles: 'tittle'])
+            // publishHTML (target: [
+            //   allowMissing: false,
+            //   alwaysLinkToLastBuild: false,
+            //   keepAll: true,
+            //   reportDir: 'src/adservice/build/reports/jacoco/test/html/',
+            //   reportFiles: 'index.html',
+            //   reportName: "JaCoCo Report"
+            // ])
 
             """
       }
