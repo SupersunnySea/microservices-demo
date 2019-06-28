@@ -59,21 +59,6 @@ volumes: [
                     """
               }
         }
-      container('gradle') {
-          sh """
-            pwd
-            echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
-            echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
-            cd src/adservice
-            ./gradlew jacocoTestReport
-            publishHTML (target: [
-                reportDir: 'build/reports/jacoco/test/html',
-                reportFiles: 'index.html',
-                reportName: "JaCoCo Report"
-            ])
-
-            """
-      }
     }
 
     stage('Create Docker Images') {
@@ -90,4 +75,3 @@ volumes: [
     }
     
   }
-
