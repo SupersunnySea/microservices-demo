@@ -171,7 +171,7 @@ public final class AdService {
 
   private static final ImmutableListMultimap<String, Ad> adsMap = createAdsMap();
 
-  private Collection<Ad> getAdsByCategory(String category) {
+  public Collection<Ad> getAdsByCategory(String category) {
     return adsMap.get(category);
   }
 
@@ -197,7 +197,7 @@ public final class AdService {
     }
   }
 
-  private static ImmutableListMultimap<String, Ad> createAdsMap() {
+  public static ImmutableListMultimap<String, Ad> createAdsMap() {
     Ad camera =
         Ad.newBuilder()
             .setRedirectUrl("/product/2ZYFJ3GM2N")
