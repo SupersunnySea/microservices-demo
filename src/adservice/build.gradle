@@ -20,15 +20,7 @@ apply plugin: 'jacoco'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'com.github.sherter.google-java-format'
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.2
-            }
-        }
-    }
-}
+
 
 repositories {
     mavenCentral()
