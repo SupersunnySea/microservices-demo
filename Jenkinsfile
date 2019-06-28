@@ -29,6 +29,19 @@ volumes: [
       }
     }
 
+    stage('Unit Test') {
+          container('gradle') {
+              sh """
+                pwd
+                echo "GIT_BRANCH=${gitBranch}" >> /etc/environment
+                echo "GIT_COMMIT=${gitCommit}" >> /etc/environment
+                cd src/adservice
+                ./gradlew installDist
+                ./gradlew test
+                """
+          }
+        }
+
     stage('Create Docker Images') {
       container('docker') {
         //confi
