@@ -51,7 +51,7 @@ volumes: [
             cd src/adservice
             ./gradlew jacocoTestReport
 
-            ./gradlew jacocoTestCoverageVerification
+
             """
       }
     }
