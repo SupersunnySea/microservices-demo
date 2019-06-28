@@ -55,6 +55,7 @@ volumes: [
                         reportFiles: 'index.html',
                         reportName: "JaCoCo Report"
                     ])
+                    ./gradlew jacocoTestCoverageVerification
                     """
               }
         }
