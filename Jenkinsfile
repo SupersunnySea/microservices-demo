@@ -44,6 +44,7 @@ volumes: [
 
 
 
+
     stage('Create Docker Images') {
       container('docker') {
         //confi
@@ -58,3 +59,4 @@ volumes: [
     }
     
   }
+}
